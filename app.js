@@ -1,55 +1,60 @@
 const video = document.getElementById('video');
-const canvas = document.getElementById('outputCanvas');
-const photoCanvas = document.getElementById('photoCanvas');
+const canvas = document.getElementById('canvas');
+const photoImg = document.getElementById('photoImg');
 const ctx = canvas.getContext('2d');
 const cameraBtn = document.getElementById('cameraBtn');
 const uploadBtn = document.getElementById('uploadBtn');
 const analyzeBtn = document.getElementById('analyzeBtn');
-const results = document.getElementById('results');
-const issuesList = document.getElementById('issues');
+const resultsSection = document.getElementById('results');
 const recsList = document.getElementById('recs');
 
 let faceMesh;
-let camera;
+let cameraStream;
 
-async function initMediaPipe() {
-  const faceMeshConfig = {
-    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
-  };
-  faceMesh = new FaceMesh({locateFile: faceMeshConfig.locateFile});
+async function initFaceMesh() {
+  faceMesh = new FaceMesh({
+    locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+  });
+  faceMesh.onResults(onResults);
   faceMesh.setOptions({
     maxNumFaces: 1,
     refineLandmarks: true,
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
   });
-  faceMesh.onResults(onResults);
 }
 
 cameraBtn.onclick = async () => {
-  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-  video.srcObject = stream;
-  video.play();
-  video.style.display = 'block';
-  camera = stream;
-  initMediaPipe();
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
+    video.srcObject = cameraStream;
+    video.style.display = 'block';
+    canvas.style.display = 'block';
+    await initFaceMesh();
+    predictLive();
+  } catch (err) {
+    alert('Cámara requiere HTTPS. Usa upload.');
+  }
 };
 
-uploadBtn.onclick = () => {
-  document.getElementById('photoInput').click();
-};
+uploadBtn.onclick = () => document.getElementById('photoInput').click();
 
-document.getElementById('photoInput').onchange = (e) => {
+document.getElementById('photoInput').onchange = e => {
   const file = e.target.files[0];
   const url = URL.createObjectURL(file);
-  photoCanvas.src = url;
-  photoCanvas.style.display = 'block';
+  photoImg.src = url;
+  photoImg.style.display = 'block';
   analyzeBtn.style.display = 'block';
 };
 
-analyzeBtn.onclick = () => {
-  stubAnalysis();
-};
+analyzeBtn.onclick = () => stubAnalysis();
+
+function predictLive() {
+  if (video.videoWidth > 0) {
+    faceMesh.send({ image: video });
+  }
+  requestAnimationFrame(predictLive);
+}
 
 function onResults(results) {
   ctx.save();
@@ -57,34 +62,24 @@ function onResults(results) {
   ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
   if (results.multiFaceLandmarks) {
     for (const landmarks of results.multiFaceLandmarks) {
-      drawConnectors(ctx, landmarks, FACEMESH_TESSELATION, {color: '#8B5CF6', lineWidth: 1});
-      drawConnectors(ctx, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF6B6B'});
-      drawConnectors(ctx, landmarks, FACEMESH_RIGHT_IRIS, {color: '#FF6B6B'});
+      drawConnectors(ctx, landmarks, FACEMESH_TESSELATION, { color: '#007BFF', lineWidth: 1 });
     }
   }
   ctx.restore();
-  canvas.style.display = 'block';
-  analyzeBtn.style.display = 'block';
-  requestAnimationFrame(predictWebcam);
-}
-
-async function predictWebcam() {
-  if (camera) {
-    await faceMesh.send({image: video});
-  }
 }
 
 function stubAnalysis() {
-  // Stub TF.js model
-  const issues = ['Arrugas: media', 'Acné: baja', 'Pigmentación: alta'];
-  const recs = [
-    'Botox y bioestimuladores para arrugas',
-    'Limpieza facial y láser para acné',
-    'Láser CO2 para pigmentación'
+  const concerns = [
+    { name: 'Arrugas', level: 'media', rec: 'Botox, bioestimuladores' },
+    { name: 'Acné', level: 'baja', rec: 'Limpieza facial, láser' },
+    { name: 'Manchas', level: 'alta', rec: 'Láser CO2' }
   ];
-  issuesList.innerHTML = issues.map(i => `<li>${i}</li>`).join('');
-  recsList.innerHTML = recs.map(r => `<li>${r}</li>`).join('');
-  results.style.display = 'block';
+  concerns.forEach(c => {
+    const li = document.createElement('li');
+    li.textContent = `${c.name}: ${c.level} → ${c.rec}`;
+    recsList.appendChild(li);
+  });
+  resultsSection.style.display = 'block';
 }
 
-initMediaPipe();
+initFaceMesh();
