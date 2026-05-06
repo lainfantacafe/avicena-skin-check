@@ -25,3 +25,29 @@ Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 192.168.99.30 - - [06/May/2026 10:47:39] "GET /app.js HTTP/1.1" 304 -
 192.168.99.30 - - [06/May/2026 10:47:39] code 404, message File not found
 192.168.99.30 - - [06/May/2026 10:47:39] "GET /favicon.ico HTTP/1.1" 404 -
+192.168.99.51 - - [06/May/2026 10:48:43] "GET / HTTP/1.1" 200 -
+192.168.99.51 - - [06/May/2026 10:48:43] "GET /styles.css HTTP/1.1" 200 -
+192.168.99.51 - - [06/May/2026 10:48:43] "GET /logo-avicena.png HTTP/1.1" 200 -
+192.168.99.51 - - [06/May/2026 10:48:43] "GET /manifest.json HTTP/1.1" 200 -
+192.168.99.51 - - [06/May/2026 10:48:44] "GET /app.js HTTP/1.1" 200 -
+192.168.99.51 - - [06/May/2026 10:48:44] code 404, message File not found
+192.168.99.51 - - [06/May/2026 10:48:44] "GET /favicon.ico HTTP/1.1" 404 -
+192.168.99.30 - - [06/May/2026 10:49:03] "GET / HTTP/1.1" 200 -
+192.168.99.30 - - [06/May/2026 10:49:03] "GET /styles.css HTTP/1.1" 200 -
+192.168.99.30 - - [06/May/2026 10:49:03] "GET /logo-avicena.png HTTP/1.1" 200 -
+192.168.99.30 - - [06/May/2026 10:49:03] "GET /app.js HTTP/1.1" 304 -
+192.168.99.30 - - [06/May/2026 10:49:03] code 404, message File not found
+192.168.99.30 - - [06/May/2026 10:49:03] "GET /favicon.ico HTTP/1.1" 404 -
+192.168.99.30 - - [06/May/2026 10:53:42] "GET /sketches/001-feminine-variants/variant1.html HTTP/1.1" 200 -
+192.168.99.30 - - [06/May/2026 10:53:42] "GET /logo-avicena.png HTTP/1.1" 200 -
+192.168.99.30 - - [06/May/2026 10:53:43] code 404, message File not found
+192.168.99.30 - - [06/May/2026 10:53:43] "GET /favicon.ico HTTP/1.1" 404 -
+192.168.99.30 - - [06/May/2026 10:54:27] "GET /sketches/001-feminine-variants/variant1.html HTTP/1.1" 304 -
+192.168.99.30 - - [06/May/2026 10:54:27] "GET /logo-avicena.png HTTP/1.1" 304 -
+192.168.99.30 - - [06/May/2026 10:54:27] code 404, message File not found
+192.168.99.30 - - [06/May/2026 10:54:27] "GET /favicon.ico HTTP/1.1" 404 -
+192.168.99.30 - - [06/May/2026 10:54:38] "GET /sketches/001-feminine-variants/variant2.html HTTP/1.1" 200 -
+192.168.99.30 - - [06/May/2026 10:54:55] "GET /sketches/001-feminine-variants/variant3.html HTTP/1.1" 200 -
+192.168.99.30 - - [06/May/2026 10:54:55] "GET /logo-avicena.png HTTP/1.1" 200 -
+192.168.99.30 - - [06/May/2026 10:54:55] code 404, message File not found
+192.168.99.30 - - [06/May/2026 10:54:55] "GET /favicon.ico HTTP/1.1" 404 -
