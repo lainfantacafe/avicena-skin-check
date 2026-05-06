@@ -1,13 +1,13 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Roboto', sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; }
+body { font-family: 'Roboto', sans-serif; background: linear-gradient(to bottom, #fdf2f8, #f8fafc); color: #333; line-height: 1.6; }
 .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-.hero { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #007BFF, #00C851); color: white; border-radius: 20px; margin-bottom: 40px; }
+.hero { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #FF69B4, #FFD700); color: white; border-radius: 20px; margin-bottom: 40px; }
 .hero h1 { font-size: 3em; font-weight: 700; margin-bottom: 20px; }
 .subtitle { font-size: 1.3em; font-weight: 300; margin-bottom: 40px; }
 .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 .btn-primary, .btn-secondary { padding: 15px 40px; font-size: 1.1em; border: none; border-radius: 50px; cursor: pointer; font-weight: 500; transition: all 0.3s; }
-.btn-primary { background: #00C851; color: white; }
-.btn-secondary { background: white; color: #007BFF; }
+.btn-primary { background: linear-gradient(135deg, #FF69B4, #FF1493); color: white; box-shadow: 0 4px 15px rgba(255,105,180,0.4); }
+.btn-secondary { background: white; color: #FF69B4; border: 2px solid #FF69B4; }
 .btn-primary:hover { background: #00B140; transform: translateY(-2px); }
 .btn-secondary:hover { background: #f8f9fa; box-shadow: 0 5px 15px rgba(0,123,255,0.3); }
 .features { background: white; padding: 40px; border-radius: 20px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
